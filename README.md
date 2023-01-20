@@ -4,6 +4,11 @@ TODO: Give a short introduction of your project. Let this section explain the ob
 # Getting Started
 TODO: Guide users through getting your code up and running on their own system. In this section you can talk about:
 
+composer install
+colocar .env para docker en /src
+.env para la aplicación /src/api
+.env.testing para la aplicación /src/api
+
 PUT
 calcula la puntuación de todos los anuncios
 /api/calculate

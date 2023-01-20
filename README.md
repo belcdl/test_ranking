@@ -8,10 +8,12 @@ PUT
 calcula la puntuación de todos los anuncios
 /api/calculate
 
-GET
-listado de anuncios irrelevantes
-/api/irrelevant
+devuelve todos los anuncios ya puntuados por orden de id.
 
 GET
-listado de anuncios ordenados de mayor puntuacióna menor
+listado de anuncios irrelevantes ordenados de menor a mayor
+/api/ads/irrelevant
+
+GET
+listado de anuncios ordenados de mayor puntuación a menor
 /api/ads/list

@@ -15,7 +15,7 @@ trait GetAds
     }
 
     public function getQualityData() {        
-        $ads_data = Ad::where('score', '<', 40)->get()->toArray();
+        $ads_data = Ad::where('score', '<', 40)->orderBy('score')->get()->toArray();
         return $this->setPics($ads_data);
     }
 

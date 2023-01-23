@@ -23,20 +23,11 @@ class CalculateScoreController extends Controller
    
     public function calculate() {
         
-        foreach ($this->getData() as $ad) {
-           
-            $rules =  [
-                'description' =>  [new DescriptionRequired, new DescriptionContains,  
-                                   Rule::when( $ad['typology'] == 'CHALET', new CountWordsChalet),Rule::when( $ad['typology'] == 'FLAT',new CountWordsFlat)],
-                'pictures' =>  [new PicturesRequired],
-                'house_size' =>  [new HouseSizeCheck],
-                'garden_size' =>  [new GardenSizeCheck],
-            ];
-    
-            $validator = Validator::make($ad, $rules);
-            $response = $validator->errors()->all();
+        foreach ($this->getData() as $ad) {           
 
-            $suma = array_sum($response);
+            $validator = $this->validateData($ad);         
+            $suma = array_sum($validator->errors()->all());
+
             //resta si no hay fotos
             //el anuncio no esta completo
             if (empty($ad['pictures'])) {
@@ -56,6 +47,20 @@ class CalculateScoreController extends Controller
             }               
         }
         return response()->json($this->getData());
+    }
+
+    public function validateData($ad) {
+        $rules =  [
+            'description' =>  [new DescriptionRequired, new DescriptionContains,  
+                               Rule::when( $ad['typology'] == 'CHALET', new CountWordsChalet),Rule::when( $ad['typology'] == 'FLAT',new CountWordsFlat)],
+            'pictures' =>  [new PicturesRequired],
+            'house_size' =>  [new HouseSizeCheck],
+            'garden_size' =>  [new GardenSizeCheck],
+        ];
+
+        $validator = Validator::make($ad, $rules);
+        
+        return $validator;
     }
 
     public function isComplete($keys, $typology) {
